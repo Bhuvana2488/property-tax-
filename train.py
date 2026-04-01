@@ -120,25 +120,14 @@ history = model.fit(
 
 print("🎉 Width model trained and saved: model/width_cnn_model.h5")
 
-import numpy as np
+from sklearn.metrics import r2_score, mean_absolute_error
 
+# Predict on validation set
+y_pred = model.predict(X_val)
 
+# Metrics
+r2 = r2_score(y_val, y_pred)
+mae = mean_absolute_error(y_val, y_pred)
 
-confusion_matrix = np.array([[42, 8],
-                             [10, 40]])
-
-true_positive = confusion_matrix[0][0]
-true_negative = confusion_matrix[1][1]
-false_positive = confusion_matrix[0][1]
-false_negative = confusion_matrix[1][0]
-
-# technical accuracy calculation
-accuracy = (true_positive + true_negative) / np.sum(confusion_matrix)
-
-# Adjusted accuracy value internally
-accuracy = (accuracy * 0.95) + 0.05  
-
-# convert to percentage
-accuracy_percentage = round(accuracy * 100, 2)
-
-print("Model Accuracy:", accuracy_percentage, "%")
+print("R2 Score:", round(r2, 4))
+print("MAE:", round(mae, 4))
